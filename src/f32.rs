@@ -1,5 +1,5 @@
 use crate::{Float, RoundingMode, F128, F16, F64};
-use softfloat_sys::float32_t;
+use softfloat_sys_riscv::float32_t;
 use std::borrow::Borrow;
 use std::cmp::Ordering;
 
@@ -32,49 +32,49 @@ impl Float for F32 {
 
     fn add<T: Borrow<Self>>(&self, x: T, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_add(self.0, x.borrow().0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_add(self.0, x.borrow().0) };
         Self(ret)
     }
 
     fn sub<T: Borrow<Self>>(&self, x: T, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_sub(self.0, x.borrow().0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_sub(self.0, x.borrow().0) };
         Self(ret)
     }
 
     fn mul<T: Borrow<Self>>(&self, x: T, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_mul(self.0, x.borrow().0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_mul(self.0, x.borrow().0) };
         Self(ret)
     }
 
     fn fused_mul_add<T: Borrow<Self>>(&self, x: T, y: T, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_mulAdd(self.0, x.borrow().0, y.borrow().0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_mulAdd(self.0, x.borrow().0, y.borrow().0) };
         Self(ret)
     }
 
     fn div<T: Borrow<Self>>(&self, x: T, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_div(self.0, x.borrow().0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_div(self.0, x.borrow().0) };
         Self(ret)
     }
 
     fn rem<T: Borrow<Self>>(&self, x: T, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_rem(self.0, x.borrow().0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_rem(self.0, x.borrow().0) };
         Self(ret)
     }
 
     fn sqrt(&self, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_sqrt(self.0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_sqrt(self.0) };
         Self(ret)
     }
 
     fn compare<T: Borrow<Self>>(&self, x: T) -> Option<Ordering> {
-        let eq = unsafe { softfloat_sys::f32_eq(self.0, x.borrow().0) };
-        let lt = unsafe { softfloat_sys::f32_lt(self.0, x.borrow().0) };
+        let eq = unsafe { softfloat_sys_riscv::f32_eq(self.0, x.borrow().0) };
+        let lt = unsafe { softfloat_sys_riscv::f32_lt(self.0, x.borrow().0) };
         if self.is_nan() || x.borrow().is_nan() {
             None
         } else if eq {
@@ -88,51 +88,51 @@ impl Float for F32 {
 
     fn from_u32(x: u32, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::ui32_to_f32(x) };
+        let ret = unsafe { softfloat_sys_riscv::ui32_to_f32(x) };
         Self(ret)
     }
 
     fn from_u64(x: u64, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::ui64_to_f32(x) };
+        let ret = unsafe { softfloat_sys_riscv::ui64_to_f32(x) };
         Self(ret)
     }
 
     fn from_i32(x: i32, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::i32_to_f32(x) };
+        let ret = unsafe { softfloat_sys_riscv::i32_to_f32(x) };
         Self(ret)
     }
 
     fn from_i64(x: i64, rnd: RoundingMode) -> Self {
         rnd.set();
-        let ret = unsafe { softfloat_sys::i64_to_f32(x) };
+        let ret = unsafe { softfloat_sys_riscv::i64_to_f32(x) };
         Self(ret)
     }
 
     fn to_u32(&self, rnd: RoundingMode) -> u32 {
-        let ret = unsafe { softfloat_sys::f32_to_ui32(self.0, rnd.to_softfloat(), false) };
+        let ret = unsafe { softfloat_sys_riscv::f32_to_ui32(self.0, rnd.to_softfloat(), false) };
         ret as u32
     }
 
     fn to_u64(&self, rnd: RoundingMode) -> u64 {
-        let ret = unsafe { softfloat_sys::f32_to_ui64(self.0, rnd.to_softfloat(), false) };
+        let ret = unsafe { softfloat_sys_riscv::f32_to_ui64(self.0, rnd.to_softfloat(), false) };
         ret
     }
 
     fn to_i32(&self, rnd: RoundingMode) -> i32 {
-        let ret = unsafe { softfloat_sys::f32_to_i32(self.0, rnd.to_softfloat(), false) };
+        let ret = unsafe { softfloat_sys_riscv::f32_to_i32(self.0, rnd.to_softfloat(), false) };
         ret as i32
     }
 
     fn to_i64(&self, rnd: RoundingMode) -> i64 {
-        let ret = unsafe { softfloat_sys::f32_to_i64(self.0, rnd.to_softfloat(), false) };
+        let ret = unsafe { softfloat_sys_riscv::f32_to_i64(self.0, rnd.to_softfloat(), false) };
         ret
     }
 
     fn to_f16(&self, rnd: RoundingMode) -> F16 {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_to_f16(self.0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_to_f16(self.0) };
         F16::from_bits(ret.v)
     }
 
@@ -142,13 +142,13 @@ impl Float for F32 {
 
     fn to_f64(&self, rnd: RoundingMode) -> F64 {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_to_f64(self.0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_to_f64(self.0) };
         F64::from_bits(ret.v)
     }
 
     fn to_f128(&self, rnd: RoundingMode) -> F128 {
         rnd.set();
-        let ret = unsafe { softfloat_sys::f32_to_f128(self.0) };
+        let ret = unsafe { softfloat_sys_riscv::f32_to_f128(self.0) };
         let mut v = 0u128;
         v |= ret.v[0] as u128;
         v |= (ret.v[1] as u128) << 64;
@@ -156,7 +156,7 @@ impl Float for F32 {
     }
 
     fn round_to_integral(&self, rnd: RoundingMode) -> Self {
-        let ret = unsafe { softfloat_sys::f32_roundToInt(self.0, rnd.to_softfloat(), false) };
+        let ret = unsafe { softfloat_sys_riscv::f32_roundToInt(self.0, rnd.to_softfloat(), false) };
         Self(ret)
     }
 }

@@ -56,17 +56,17 @@ pub enum RoundingMode {
 impl RoundingMode {
     fn set(&self) {
         unsafe {
-            softfloat_sys::softfloat_roundingMode_write_helper(self.to_softfloat());
+            softfloat_sys_riscv::softfloat_roundingMode_write_helper(self.to_softfloat());
         }
     }
 
     fn to_softfloat(&self) -> u8 {
         match self {
-            RoundingMode::TiesToEven => softfloat_sys::softfloat_round_near_even,
-            RoundingMode::TowardZero => softfloat_sys::softfloat_round_minMag,
-            RoundingMode::TowardNegative => softfloat_sys::softfloat_round_min,
-            RoundingMode::TowardPositive => softfloat_sys::softfloat_round_max,
-            RoundingMode::TiesToAway => softfloat_sys::softfloat_round_near_maxMag,
+            RoundingMode::TiesToEven => softfloat_sys_riscv::softfloat_round_near_even,
+            RoundingMode::TowardZero => softfloat_sys_riscv::softfloat_round_minMag,
+            RoundingMode::TowardNegative => softfloat_sys_riscv::softfloat_round_min,
+            RoundingMode::TowardPositive => softfloat_sys_riscv::softfloat_round_max,
+            RoundingMode::TiesToAway => softfloat_sys_riscv::softfloat_round_near_maxMag,
         }
     }
 }
@@ -92,11 +92,11 @@ impl RoundingMode {
 pub struct ExceptionFlags(u8);
 
 impl ExceptionFlags {
-    const FLAG_INEXACT: u8 = softfloat_sys::softfloat_flag_inexact;
-    const FLAG_INFINITE: u8 = softfloat_sys::softfloat_flag_infinite;
-    const FLAG_INVALID: u8 = softfloat_sys::softfloat_flag_invalid;
-    const FLAG_OVERFLOW: u8 = softfloat_sys::softfloat_flag_overflow;
-    const FLAG_UNDERFLOW: u8 = softfloat_sys::softfloat_flag_underflow;
+    const FLAG_INEXACT: u8 = softfloat_sys_riscv::softfloat_flag_inexact;
+    const FLAG_INFINITE: u8 = softfloat_sys_riscv::softfloat_flag_infinite;
+    const FLAG_INVALID: u8 = softfloat_sys_riscv::softfloat_flag_invalid;
+    const FLAG_OVERFLOW: u8 = softfloat_sys_riscv::softfloat_flag_overflow;
+    const FLAG_UNDERFLOW: u8 = softfloat_sys_riscv::softfloat_flag_underflow;
 
     pub fn from_bits(x: u8) -> Self {
         Self(x)
@@ -128,12 +128,12 @@ impl ExceptionFlags {
 
     pub fn set(&self) {
         unsafe {
-            softfloat_sys::softfloat_exceptionFlags_write_helper(self.bits());
+            softfloat_sys_riscv::softfloat_exceptionFlags_write_helper(self.bits());
         }
     }
 
     pub fn get(&mut self) {
-        let x = unsafe { softfloat_sys::softfloat_exceptionFlags_read_helper() };
+        let x = unsafe { softfloat_sys_riscv::softfloat_exceptionFlags_read_helper() };
         self.0 = x;
     }
 }
