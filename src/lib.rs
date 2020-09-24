@@ -363,6 +363,12 @@ pub trait Float {
     }
 
     #[inline]
+    fn is_quiet_nan(&self) -> bool {
+        self.exponent() == Self::EXPONENT_BIT &&
+            (self.fraction() & (Self::Payload::one() << (Self::EXPONENT_POS - 1))) != Self::Payload::zero()
+    }
+
+    #[inline]
     fn is_zero(&self) -> bool {
         self.is_positive_zero() || self.is_negative_zero()
     }
